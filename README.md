@@ -30,14 +30,13 @@ A Full Stack Web Application for managing online courses — built using **React
 -   Spring Web
 -   Spring Data JPA
 -   CORS Configuration
--   REST API Design
-
+-   REST API Design  
 ### Database – MySQL
 
 -   Course Entity
 -   JPA Repository
 -   Database connectivity via `application.properties`
-
+-   Hibernate 
 ---
 
 ## ⚙️ How to Run
@@ -87,12 +86,12 @@ npm run dev
 
 ```
 course-app/
-├── backend/        # Spring Boot backend
+├── SpringRestApi/        # Spring Boot backend
 │   └── src/
-├── frontend/       # React frontend
-│   └── src/
+├── src/
+|   └── Component/         #React Component
 ├── README.md
-└── screenshots/
+└── Gif/
 ```
 
 ---
@@ -100,7 +99,7 @@ course-app/
 ## 📬 Contact
 
 **Created By:** Kavya Varshney
-📧 Email: \[[Anurag Goyal-goyalanurag@gmail.com]
+📧 Email: \[[Anurag Goyal-goyalanurag2005@gmail.com]]
 🔗 LinkedIn: [linkedin.com/in/Anurag Goyal](www.linkedin.com/in/anurag-goyal-05929b317)
 
 ---
