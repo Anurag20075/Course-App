@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router";
 import Header from "./components/Header.jsx";
 import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
+import CourseView from "./components/CourseView.jsx";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
               element={<AllCourses></AllCourses>}
               exact
             />
+            <Route
+              path="/course-view"
+              element={<CourseView></CourseView>}
+            ></Route>
             <Route path="/about" element={<About></About>} exact />
             <Route path="/contact" element={<Contact></Contact>} exact />
           </Routes>
