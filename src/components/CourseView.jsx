@@ -1,282 +1,565 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import {
+  Play,
+  ThumbsUp,
+  MessageSquare,
+  Clock,
+  Star,
+  User,
+  Menu,
+  X,
+  Send,
+  BookOpen,
+  Award,
+} from "lucide-react";
 
-function CourseView() {
-  const [selectedLesson, setSelectedLesson] = useState(0);
-  const [comment, setComment] = useState("");
+const CourseViewPage = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentLesson, setCurrentLesson] = useState(0);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(342);
+  const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([
     {
       id: 1,
-      name: "Alex Morgan",
-      avatar: "https://placehold.co/40x40",
+      user: "Sarah Johnson",
+      avatar:
+        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face",
       time: "2 hours ago",
-      text: "This section was super helpful! Thanks for the clear explanation.",
+      text: "Great explanation of React hooks! This really helped me understand useState better.",
     },
     {
       id: 2,
-      name: "Jamie Chen",
-      avatar: "https://placehold.co/40x40",
+      user: "Mike Chen",
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
       time: "5 hours ago",
-      text: "The visuals made it easier to understand. Great job!",
+      text: "The examples are very practical. Looking forward to the next lesson on useEffect.",
     },
     {
       id: 3,
-      name: "Samantha Lee",
-      avatar: "https://placehold.co/40x40",
+      user: "Emma Davis",
+      avatar:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face",
       time: "1 day ago",
-      text: "I think there could be a bit more detail on the second example.",
+      text: "Could you cover more advanced patterns in future lessons? This is excellent so far!",
     },
   ]);
-  const [likes, setLikes] = useState(1250);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const lessons = [
-    { title: "Introduction to the Course", duration: "3:15" },
-    { title: "Setting Up Your Development Environment", duration: "8:45" },
-    { title: "Understanding Core Concepts", duration: "12:30" },
-    { title: "Building Your First Project", duration: "18:20" },
-    { title: "Advanced Techniques and Patterns", duration: "22:10" },
-    { title: "Testing and Debugging", duration: "15:45" },
-    { title: "Deployment and Optimization", duration: "10:30" },
-    { title: "Course Recap and Next Steps", duration: "6:15" },
+    {
+      title: "Introduction to React Hooks",
+      duration: "12:45",
+      completed: true,
+    },
+    { title: "Understanding useState", duration: "18:32", completed: true },
+    { title: "Working with useEffect", duration: "22:18", completed: false },
+    { title: "Custom Hooks Deep Dive", duration: "25:41", completed: false },
+    {
+      title: "useContext and State Management",
+      duration: "19:56",
+      completed: false,
+    },
+    {
+      title: "Performance with useMemo & useCallback",
+      duration: "16:33",
+      completed: false,
+    },
+    { title: "Advanced Hook Patterns", duration: "28:12", completed: false },
+    { title: "Testing React Hooks", duration: "21:07", completed: false },
   ];
 
-  const courseInfo = {
-    title: "Mastering Modern Web Development",
-    instructor: {
-      name: "Dr. Sarah Mitchell",
-      avatar: "https://placehold.co/60x60",
-    },
-    duration: "2h 45m",
-    category: "Web Development",
-    difficulty: "Intermediate",
-    description:
-      "A comprehensive course covering the latest tools, frameworks, and best practices in modern web development. From setting up your environment to deploying scalable applications, this course will equip you with the skills needed to build high-quality web applications.",
-  };
-
   const handleLike = () => {
-    if (isLiked) {
-      setLikes(likes - 1);
-    } else {
-      setLikes(likes + 1);
+    setLiked(!liked);
+    setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+  };
+
+  const handleAddComment = () => {
+    if (newComment.trim()) {
+      const comment = {
+        id: comments.length + 1,
+        user: "You",
+        avatar:
+          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
+        time: "Just now",
+        text: newComment,
+      };
+      setComments([comment, ...comments]);
+      setNewComment("");
     }
-    setIsLiked(!isLiked);
   };
-
-  const handleCommentSubmit = (e) => {
-    e.preventDefault();
-    if (comment.trim() === "") return;
-    const newComment = {
-      id: comments.length + 1,
-      name: "You",
-      avatar: "https://placehold.co/40x40",
-      time: "Just now",
-      text: comment,
-    };
-    setComments([newComment, ...comments]);
-    setComment("");
-  };
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setIsSidebarOpen(false);
-      } else {
-        setIsSidebarOpen(true);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-800">
-      {/* Header - Mobile */}
-      <header className="md:hidden flex items-center justify-between p-4 bg-white shadow-sm">
-        <h1 className="text-lg font-bold truncate">{courseInfo.title}</h1>
-        <button
-          onClick={toggleSidebar}
-          className="p-2 rounded-lg bg-indigo-100 text-indigo-600 hover:bg-indigo-200"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-      </header>
+    <>
+      <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+        rel="stylesheet"
+      />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" />
 
-      <div className="flex flex-col md:flex-row">
+      <style>
+        {`
+          :root {
+            --primary-color: #6366f1;
+            --primary-light: #e0e7ff;
+            --success-color: #10b981;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+          }
+
+          body {
+            background-color: var(--gray-50);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          }
+
+          .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 320px;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1050;
+            overflow-y: auto;
+          }
+
+          .sidebar.show {
+            transform: translateX(0);
+          }
+
+          .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1040;
+          }
+
+          .main-content {
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+          }
+
+          .lesson-item {
+            cursor: pointer;
+            border-bottom: 1px solid var(--gray-100);
+            transition: background-color 0.2s;
+          }
+
+          .lesson-item:hover {
+            background-color: var(--gray-50);
+          }
+
+          .lesson-item.active {
+            background-color: var(--primary-light);
+            border-left: 4px solid var(--primary-color);
+          }
+
+          .lesson-completed {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--success-color);
+            color: white;
+          }
+
+          .lesson-pending {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray-200);
+            color: var(--gray-600);
+          }
+
+          .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: #000;
+            border-radius: 0.5rem;
+            overflow: hidden;
+          }
+
+          .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+          }
+
+          .play-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: none;
+          }
+
+          .play-button:hover {
+            background-color: #5856eb;
+          }
+
+          .like-btn {
+            border: 1px solid var(--gray-300);
+            background: var(--gray-50);
+            color: var(--gray-600);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            transition: all 0.2s;
+          }
+
+          .like-btn.liked {
+            background: var(--primary-light);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+          }
+
+          .comment-bubble {
+            background-color: var(--gray-50);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+          }
+
+          .badge-custom {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+          }
+
+          @media (min-width: 992px) {
+            .sidebar {
+              transform: translateX(0);
+            }
+            
+            .main-content {
+              margin-left: 320px;
+            }
+          }
+
+          .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .avatar-lg {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        `}
+      </style>
+
+      <div className="min-vh-100">
+        {/* Mobile Sidebar Overlay */}
+        {sidebarOpen && (
+          <div
+            className="sidebar-overlay d-lg-none"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
         {/* Sidebar */}
-        <aside
-          className={`${
-            isSidebarOpen ? "block" : "hidden"
-          } md:block w-full md:w-64 lg:w-72 bg-white shadow-sm p-4 md:h-screen md:sticky top-0 overflow-y-auto`}
-        >
-          <h2 className="text-lg font-semibold mb-4">Course Contents</h2>
-          <nav>
-            <ul className="space-y-2">
-              {lessons.map((lesson, index) => (
-                <li key={index}>
-                  <button
-                    onClick={() => setSelectedLesson(index)}
-                    className={`w-full text-left p-3 rounded-lg transition-all flex justify-between items-center ${
-                      selectedLesson === index
-                        ? "bg-indigo-100 text-indigo-700 font-medium"
-                        : "hover:bg-gray-100"
-                    }`}
-                  >
-                    <span>{lesson.title}</span>
-                    <span className="text-sm text-gray-500">
-                      {lesson.duration}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </aside>
-
-        {/* Main Content */}
-        <main className="flex-1 p-4 md:p-6">
-          {/* Course Info */}
-          <section className="mb-6 bg-white rounded-xl shadow-sm p-4 md:p-6">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              {courseInfo.title}
-            </h2>
-            <div className="flex flex-wrap items-center gap-4 mb-4">
-              <div className="flex items-center gap-2">
-                <img
-                  src={courseInfo.instructor.avatar}
-                  alt={courseInfo.instructor.name}
-                  className="w-10 h-10 rounded-full"
-                />
-                <span className="font-medium">
-                  {courseInfo.instructor.name}
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2 text-sm text-gray-600">
-                <span>Duration: {courseInfo.duration}</span>
-                <span>•</span>
-                <span>Category: {courseInfo.category}</span>
-                <span>•</span>
-                <span>Difficulty: {courseInfo.difficulty}</span>
-              </div>
-            </div>
-            <p className="text-gray-700">{courseInfo.description}</p>
-          </section>
-
-          {/* Video Player */}
-          <section className="mb-6 aspect-video bg-black rounded-xl overflow-hidden relative">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-white text-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="64"
-                  height="64"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mx-auto mb-2"
-                >
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-                <p className="text-lg font-medium">Video Player Placeholder</p>
-              </div>
-            </div>
-          </section>
-
-          {/* Engagement Section */}
-          <section className="bg-white rounded-xl shadow-sm p-4 md:p-6 mt-6">
-            <div className="flex items-center gap-4 mb-6">
+        <div className={`sidebar ${sidebarOpen ? "show" : ""}`}>
+          <div className="p-4 border-bottom">
+            <div className="d-flex align-items-center justify-content-between">
+              <h5 className="mb-0 fw-semibold text-dark">Course Lessons</h5>
               <button
-                onClick={handleLike}
-                className={`flex items-center gap-1 px-4 py-2 rounded-full transition-colors ${
-                  isLiked
-                    ? "bg-indigo-100 text-indigo-600"
-                    : "hover:bg-gray-100"
+                type="button"
+                onClick={() => setSidebarOpen(false)}
+                className="btn-close d-lg-none"
+                aria-label="Close"
+              />
+            </div>
+          </div>
+          <div className="pb-5">
+            {lessons.map((lesson, index) => (
+              <div
+                key={index}
+                onClick={() => {
+                  setCurrentLesson(index);
+                  setSidebarOpen(false);
+                }}
+                className={`lesson-item p-3 ${
+                  currentLesson === index ? "active" : ""
                 }`}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill={isLiked ? "currentColor" : "none"}
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h15v-11a3 3 0 0 0-3-3z" />
-                  <path d="M18 9v11h-15v-11a3 3 0 0 1 3-3h7a3 3 0 0 1 3 3z" />
-                </svg>
-                <span>{likes}</span>
-              </button>
-            </div>
-
-            {/* Comments */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Comments</h3>
-              <form onSubmit={handleCommentSubmit} className="mb-6">
-                <textarea
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  placeholder="Write a comment..."
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-200 resize-none"
-                  rows="3"
-                ></textarea>
-                <div className="mt-2 flex justify-end">
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                <div className="d-flex align-items-center">
+                  <div
+                    className={
+                      lesson.completed
+                        ? "lesson-completed me-3"
+                        : "lesson-pending me-3"
+                    }
                   >
-                    Post Comment
-                  </button>
-                </div>
-              </form>
-
-              <div className="space-y-4">
-                {comments.map((c) => (
-                  <div key={c.id} className="flex gap-3">
-                    <img
-                      src={c.avatar}
-                      alt={c.name}
-                      className="w-10 h-10 rounded-full"
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-medium">{c.name}</h4>
-                        <span className="text-sm text-gray-500">{c.time}</span>
-                      </div>
-                      <p className="text-gray-700 mt-1">{c.text}</p>
+                    {lesson.completed ? (
+                      <svg
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    ) : (
+                      <Play size={16} />
+                    )}
+                  </div>
+                  <div className="flex-grow-1">
+                    <h6
+                      className={`mb-1 ${
+                        currentLesson === index ? "text-primary" : "text-dark"
+                      }`}
+                    >
+                      {lesson.title}
+                    </h6>
+                    <div className="d-flex align-items-center text-muted">
+                      <Clock size={12} className="me-1" />
+                      <small>{lesson.duration}</small>
                     </div>
                   </div>
-                ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="main-content">
+          {/* Header */}
+          <header className="bg-white shadow-sm border-bottom p-3">
+            <div className="d-flex align-items-center">
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(true)}
+                className="btn btn-outline-secondary me-3 d-lg-none"
+              >
+                <Menu size={20} />
+              </button>
+              <div className="flex-grow-1">
+                <h4 className="mb-1 text-dark fw-semibold">
+                  React Hooks Masterclass
+                </h4>
+                <div className="d-flex align-items-center flex-wrap gap-3">
+                  <div className="d-flex align-items-center">
+                    <img
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
+                      alt="Instructor"
+                      className="avatar-sm me-2"
+                    />
+                    <small className="text-muted">Dr. Alex Rodriguez</small>
+                  </div>
+                  <small className="text-muted">|</small>
+                  <div className="d-flex align-items-center">
+                    <BookOpen size={16} className="me-1 text-muted" />
+                    <small className="text-muted">8 lessons</small>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <Clock size={16} className="me-1 text-muted" />
+                    <small className="text-muted">2h 45m</small>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <Award size={16} className="me-1 text-muted" />
+                    <small className="text-muted">Intermediate</small>
+                  </div>
+                </div>
               </div>
             </div>
-          </section>
-        </main>
+          </header>
+
+          <div className="container-fluid py-4" style={{ maxWidth: "1200px" }}>
+            {/* Course Info Panel */}
+            <div className="card shadow-sm mb-4">
+              <div className="card-body p-4">
+                <div className="d-flex align-items-start">
+                  <img
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face"
+                    alt="Instructor"
+                    className="avatar-lg me-4"
+                  />
+                  <div className="flex-grow-1">
+                    <h2 className="fw-bold text-dark mb-3">
+                      React Hooks Masterclass
+                    </h2>
+                    <p className="text-muted mb-4">
+                      Master React Hooks from basics to advanced patterns. Learn
+                      useState, useEffect, custom hooks, and performance
+                      optimization techniques used in production applications.
+                    </p>
+                    <div className="d-flex align-items-center flex-wrap gap-4">
+                      <div className="d-flex align-items-center">
+                        <User size={16} className="me-1 text-muted" />
+                        <small className="text-muted">Dr. Alex Rodriguez</small>
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <Star
+                          size={16}
+                          className="me-1 text-warning"
+                          fill="currentColor"
+                        />
+                        <small className="text-muted">
+                          4.8 (1,234 reviews)
+                        </small>
+                      </div>
+                      <span className="badge-custom">Web Development</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Player */}
+            <div className="card shadow-sm mb-4">
+              <div className="card-body p-0">
+                <div className="video-container">
+                  <div className="video-placeholder">
+                    <div className="text-center">
+                      <button className="play-button text-white mb-3">
+                        <Play size={32} style={{ marginLeft: "4px" }} />
+                      </button>
+                      <h5 className="text-white mb-2">
+                        {lessons[currentLesson].title}
+                      </h5>
+                      <p className="text-light mb-0">
+                        {lessons[currentLesson].duration}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Engagement Section */}
+            <div className="card shadow-sm">
+              <div className="card-body p-4">
+                {/* Like Button */}
+                <div className="d-flex align-items-center pb-4 border-bottom mb-4">
+                  <button
+                    onClick={handleLike}
+                    className={`like-btn btn d-flex align-items-center me-4 ${
+                      liked ? "liked" : ""
+                    }`}
+                  >
+                    <ThumbsUp
+                      size={16}
+                      className="me-2"
+                      fill={liked ? "currentColor" : "none"}
+                    />
+                    <span className="fw-medium">{likeCount}</span>
+                  </button>
+                  <div className="d-flex align-items-center text-muted">
+                    <MessageSquare size={16} className="me-2" />
+                    <span>{comments.length} Comments</span>
+                  </div>
+                </div>
+
+                {/* Add Comment */}
+                <div className="pb-4 border-bottom mb-4">
+                  <div className="d-flex">
+                    <img
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face"
+                      alt="Your avatar"
+                      className="avatar me-3"
+                    />
+                    <div className="flex-grow-1">
+                      <textarea
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        placeholder="Add a comment..."
+                        className="form-control mb-2"
+                        rows="3"
+                        style={{ resize: "none" }}
+                      />
+                      <div className="d-flex justify-content-end">
+                        <button
+                          onClick={handleAddComment}
+                          className="btn btn-primary d-flex align-items-center"
+                        >
+                          <Send size={16} className="me-2" />
+                          Comment
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Comments List */}
+                <div className="d-flex flex-column gap-4">
+                  {comments.map((comment) => (
+                    <div key={comment.id} className="d-flex">
+                      <img
+                        src={comment.avatar}
+                        alt={comment.user}
+                        className="avatar me-3"
+                      />
+                      <div className="flex-grow-1">
+                        <div className="comment-bubble">
+                          <div className="d-flex align-items-center mb-2">
+                            <span className="fw-medium text-dark me-2">
+                              {comment.user}
+                            </span>
+                            <small className="text-muted">{comment.time}</small>
+                          </div>
+                          <p className="text-dark mb-0">{comment.text}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
-}
-export default CourseView;
+};
+
+export default CourseViewPage;

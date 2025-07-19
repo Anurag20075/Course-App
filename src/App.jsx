@@ -10,6 +10,7 @@ import Header from "./components/Header.jsx";
 import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
 import CourseView from "./components/CourseView.jsx";
+// import CourseViewPage from "./components/CourseViewBootstrapCombined.jsx";
 
 function App() {
   return (
