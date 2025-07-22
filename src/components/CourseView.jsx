@@ -303,8 +303,8 @@ const CourseViewPage = () => {
         )}
 
         {/* Sidebar */}
-        <div className={`sidebar ${sidebarOpen ? "show" : ""}`}>
-          <div className="p-4 border-bottom">
+        <div className={`sidebar ${sidebarOpen ? "show" : ""} mt-`}>
+          <div className="p-4 border-bottom ">
             <div className="d-flex align-items-center justify-content-between">
               <h5 className="mb-0 fw-semibold text-dark">Course Lessons</h5>
               <button
