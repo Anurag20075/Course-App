@@ -99,198 +99,199 @@ const CourseViewPage = () => {
 
       <style>
         {`
-          :root {
-            --primary-color: #6366f1;
-            --primary-light: #e0e7ff;
-            --success-color: #10b981;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-          }
+    :root {
+      --primary-color: #6366f1;
+      --primary-light: #e0e7ff;
+      --success-color: #10b981;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+    }
 
-          body {
-            background-color: var(--gray-50);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-          }
+    body {
+      background-color: var(--gray-50);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
 
-          .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 320px;
-            background: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            z-index: 1050;
-            overflow-y: auto;
-          }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: auto;
+      height: 100vh;
+      width: 320px;
+      background: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 1050;
+      overflow-y: auto;
+      margin-top: 100px;
+    }
 
-          .sidebar.show {
-            transform: translateX(0);
-          }
+    .sidebar.show {
+      transform: translateX(0);
+    }
 
-          .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1040;
-          }
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1040;
+    }
 
-          .main-content {
-            margin-left: 0;
-            transition: margin-left 0.3s ease;
-          }
+    .main-content {
+      margin-right: 0;
+      transition: margin-right 0.3s ease;
+    }
 
-          .lesson-item {
-            cursor: pointer;
-            border-bottom: 1px solid var(--gray-100);
-            transition: background-color 0.2s;
-          }
+    @media (min-width: 992px) {
+      .sidebar {
+        transform: translateX(0);
+      }
 
-          .lesson-item:hover {
-            background-color: var(--gray-50);
-          }
+      .main-content {
+        margin-left: 0;
+        margin-right: 320px;
+      }
+    }
 
-          .lesson-item.active {
-            background-color: var(--primary-light);
-            border-left: 4px solid var(--primary-color);
-          }
+    .lesson-item {
+      cursor: pointer;
+      border-bottom: 1px solid var(--gray-100);
+      transition: background-color 0.2s;
+    }
 
-          .lesson-completed {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--success-color);
-            color: white;
-          }
+    .lesson-item:hover {
+      background-color: var(--gray-50);
+    }
 
-          .lesson-pending {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--gray-200);
-            color: var(--gray-600);
-          }
+    .lesson-item.active {
+      background-color: var(--primary-light);
+      border-right: 4px solid var(--primary-color);
+    }
 
-          .video-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            background: #000;
-            border-radius: 0.5rem;
-            overflow: hidden;
-          }
+    .lesson-completed,
+    .lesson-pending {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-          .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-          }
+    .lesson-completed {
+      background-color: var(--success-color);
+      color: white;
+    }
 
-          .play-button {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            border: none;
-          }
+    .lesson-pending {
+      background-color: var(--gray-200);
+      color: var(--gray-600);
+    }
 
-          .play-button:hover {
-            background-color: #5856eb;
-          }
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      background: #000;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
 
-          .like-btn {
-            border: 1px solid var(--gray-300);
-            background: var(--gray-50);
-            color: var(--gray-600);
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
-            transition: all 0.2s;
-          }
+    .video-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
 
-          .like-btn.liked {
-            background: var(--primary-light);
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-          }
+    .play-button {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      border: none;
+    }
 
-          .comment-bubble {
-            background-color: var(--gray-50);
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-          }
+    .play-button:hover {
+      background-color: #5856eb;
+    }
 
-          .badge-custom {
-            background-color: var(--primary-light);
-            color: var(--primary-color);
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-          }
+    .like-btn {
+      border: 1px solid var(--gray-300);
+      background: var(--gray-50);
+      color: var(--gray-600);
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      transition: all 0.2s;
+    }
 
-          @media (min-width: 992px) {
-            .sidebar {
-              transform: translateX(0);
-            }
-            
-            .main-content {
-              margin-left: 320px;
-            }
-          }
+    .like-btn.liked {
+      background: var(--primary-light);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
 
-          .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
+    .comment-bubble {
+      background-color: var(--gray-50);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+    }
 
-          .avatar-sm {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
+    .badge-custom {
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+    }
 
-          .avatar-lg {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
-        `}
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .avatar-sm {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .avatar-lg {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  `}
       </style>
 
       <div className="min-vh-100">
@@ -303,157 +304,11 @@ const CourseViewPage = () => {
         )}
 
         {/* Sidebar */}
-        <div className={`sidebar ${sidebarOpen ? "show" : ""} mt-`}>
-          <div className="p-4 border-bottom ">
-            <div className="d-flex align-items-center justify-content-between">
-              <h5 className="mb-0 fw-semibold text-dark">Course Lessons</h5>
-              <button
-                type="button"
-                onClick={() => setSidebarOpen(false)}
-                className="btn-close d-lg-none"
-                aria-label="Close"
-              />
-            </div>
-          </div>
-          <div className="pb-5">
-            {lessons.map((lesson, index) => (
-              <div
-                key={index}
-                onClick={() => {
-                  setCurrentLesson(index);
-                  setSidebarOpen(false);
-                }}
-                className={`lesson-item p-3 ${
-                  currentLesson === index ? "active" : ""
-                }`}
-              >
-                <div className="d-flex align-items-center">
-                  <div
-                    className={
-                      lesson.completed
-                        ? "lesson-completed me-3"
-                        : "lesson-pending me-3"
-                    }
-                  >
-                    {lesson.completed ? (
-                      <svg
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    ) : (
-                      <Play size={16} />
-                    )}
-                  </div>
-                  <div className="flex-grow-1">
-                    <h6
-                      className={`mb-1 ${
-                        currentLesson === index ? "text-primary" : "text-dark"
-                      }`}
-                    >
-                      {lesson.title}
-                    </h6>
-                    <div className="d-flex align-items-center text-muted">
-                      <Clock size={12} className="me-1" />
-                      <small>{lesson.duration}</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* Main Content */}
         <div className="main-content">
-          {/* Header */}
-          <header className="bg-white shadow-sm border-bottom p-3">
-            <div className="d-flex align-items-center">
-              <button
-                type="button"
-                onClick={() => setSidebarOpen(true)}
-                className="btn btn-outline-secondary me-3 d-lg-none"
-              >
-                <Menu size={20} />
-              </button>
-              <div className="flex-grow-1">
-                <h4 className="mb-1 text-dark fw-semibold">
-                  React Hooks Masterclass
-                </h4>
-                <div className="d-flex align-items-center flex-wrap gap-3">
-                  <div className="d-flex align-items-center">
-                    <img
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
-                      alt="Instructor"
-                      className="avatar-sm me-2"
-                    />
-                    <small className="text-muted">Dr. Alex Rodriguez</small>
-                  </div>
-                  <small className="text-muted">|</small>
-                  <div className="d-flex align-items-center">
-                    <BookOpen size={16} className="me-1 text-muted" />
-                    <small className="text-muted">8 lessons</small>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    <Clock size={16} className="me-1 text-muted" />
-                    <small className="text-muted">2h 45m</small>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    <Award size={16} className="me-1 text-muted" />
-                    <small className="text-muted">Intermediate</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </header>
-
           <div className="container-fluid py-4" style={{ maxWidth: "1200px" }}>
             {/* Course Info Panel */}
-            <div className="card shadow-sm mb-4">
-              <div className="card-body p-4">
-                <div className="d-flex align-items-start">
-                  <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face"
-                    alt="Instructor"
-                    className="avatar-lg me-4"
-                  />
-                  <div className="flex-grow-1">
-                    <h2 className="fw-bold text-dark mb-3">
-                      React Hooks Masterclass
-                    </h2>
-                    <p className="text-muted mb-4">
-                      Master React Hooks from basics to advanced patterns. Learn
-                      useState, useEffect, custom hooks, and performance
-                      optimization techniques used in production applications.
-                    </p>
-                    <div className="d-flex align-items-center flex-wrap gap-4">
-                      <div className="d-flex align-items-center">
-                        <User size={16} className="me-1 text-muted" />
-                        <small className="text-muted">Dr. Alex Rodriguez</small>
-                      </div>
-                      <div className="d-flex align-items-center">
-                        <Star
-                          size={16}
-                          className="me-1 text-warning"
-                          fill="currentColor"
-                        />
-                        <small className="text-muted">
-                          4.8 (1,234 reviews)
-                        </small>
-                      </div>
-                      <span className="badge-custom">Web Development</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             {/* Video Player */}
             <div className="card shadow-sm mb-4">
@@ -475,9 +330,47 @@ const CourseViewPage = () => {
                 </div>
               </div>
             </div>
-
+            {/* <div className="card shadow-sm mb-4">
+              
+            </div> */}
             {/* Engagement Section */}
             <div className="card shadow-sm">
+              <div className="card-body p-4">
+                <div className="d-flex align-items-start">
+                  <img
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face"
+                    alt="Instructor"
+                    className="avatar-lg me-4"
+                  />{" "}
+                  <div className="flex-grow-1">
+                    <h2 className="fw-bold text-dark mb-3">
+                      React Hooks Masterclass
+                    </h2>
+                    <p className="text-muted mb-4">
+                      Master React Hooks from basics to advanced patterns. Learn
+                      useState, useEffect, custom hooks, and performance
+                      optimization techniques used in production applications.
+                    </p>
+                    <div className="d-flex align-items-center flex-wrap gap-4">
+                      <div className="d-flex align-items-center">
+                        <User size={16} className="me-1 text-muted" />
+                        <small className="text-muted">Dr. Alex Rodriguez</small>
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <Star
+                          size={16}
+                          className="me-1 text-warning"
+                          fill="currentColor"
+                        />{" "}
+                        <small className="text-muted">
+                          4.8 (1,234 reviews)
+                        </small>
+                      </div>
+                      <span className="badge-custom">Web Development</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="card-body p-4">
                 {/* Like Button */}
                 <div className="d-flex align-items-center pb-4 border-bottom mb-4">
@@ -556,6 +449,74 @@ const CourseViewPage = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      {/* Sidebar */}
+      <div className={`sidebar ${sidebarOpen ? "show" : ""} mt-`}>
+        <div className="p-4 border-bottom ">
+          <div className="d-flex align-items-center justify-content-between">
+            <h5 className="mb-0 fw-semibold text-dark">Course Lessons</h5>
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(false)}
+              className="btn-close d-lg-none"
+              aria-label="Close"
+            />
+          </div>
+        </div>
+        <div className="pb-5">
+          {lessons.map((lesson, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                setCurrentLesson(index);
+                setSidebarOpen(false);
+              }}
+              className={`lesson-item p-3 ${
+                currentLesson === index ? "active" : ""
+              }`}
+            >
+              <div className="d-flex align-items-center">
+                <div
+                  className={
+                    lesson.completed
+                      ? "lesson-completed me-3"
+                      : "lesson-pending me-3"
+                  }
+                >
+                  {lesson.completed ? (
+                    <svg
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  ) : (
+                    <Play size={16} />
+                  )}
+                </div>
+                <div className="flex-grow-1">
+                  <h6
+                    className={`mb-1 ${
+                      currentLesson === index ? "text-primary" : "text-dark"
+                    }`}
+                  >
+                    {lesson.title}
+                  </h6>
+                  <div className="d-flex align-items-center text-muted">
+                    <Clock size={12} className="me-1" />
+                    <small>{lesson.duration}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>
