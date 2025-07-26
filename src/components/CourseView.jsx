@@ -1,325 +1,536 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  Play,
   ThumbsUp,
-  MessageSquare,
+  ThumbsDown,
   Clock,
   Star,
   User,
-  Menu,
-  X,
+  Play,
+  MessageCircle,
   Send,
-  BookOpen,
-  Award,
 } from "lucide-react";
-import "../CSS/Style.css";
-const CourseViewPage = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [currentLesson, setCurrentLesson] = useState(0);
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(342);
-  const [newComment, setNewComment] = useState("");
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      user: "Sarah Johnson",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face",
-      time: "2 hours ago",
-      text: "Great explanation of React hooks! This really helped me understand useState better.",
-    },
-    {
-      id: 2,
-      user: "Mike Chen",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
-      time: "5 hours ago",
-      text: "The examples are very practical. Looking forward to the next lesson on useEffect.",
-    },
-    {
-      id: 3,
-      user: "Emma Davis",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face",
-      time: "1 day ago",
-      text: "Could you cover more advanced patterns in future lessons? This is excellent so far!",
-    },
-  ]);
 
-  const lessons = [
-    {
-      title: "Introduction to React Hooks",
-      duration: "12:45",
-      completed: true,
-    },
-    { title: "Understanding useState", duration: "18:32", completed: true },
-    { title: "Working with useEffect", duration: "22:18", completed: false },
-    { title: "Custom Hooks Deep Dive", duration: "25:41", completed: false },
-    {
-      title: "useContext and State Management",
-      duration: "19:56",
-      completed: false,
-    },
-    {
-      title: "Performance with useMemo & useCallback",
-      duration: "16:33",
-      completed: false,
-    },
-    { title: "Advanced Hook Patterns", duration: "28:12", completed: false },
-    { title: "Testing React Hooks", duration: "21:07", completed: false },
-  ];
+// Course data (simulating the imported data)
+const CourseViewData = [
+  {
+    id: "1",
+    title: "React for Beginners",
+    instructor: "Wes Bos",
+    avatar: "/avatars/wes.png",
+    description:
+      "Learn the fundamentals of React, the popular JavaScript library for building user interfaces. This comprehensive course covers components, state management, hooks, and modern React patterns.",
+    tags: ["React", "Frontend"],
+    videoUrl: "https://www.youtube.com/embed/xyz123",
+    duration: "3h 20m",
+    rating: 4.5,
+    progress: 0.3,
+    likes: 124,
+    comments: [
+      {
+        id: 1,
+        name: "Alice",
+        text: "Really helpful intro to React!",
+        timestamp: "2 days ago",
+      },
+      {
+        id: 2,
+        name: "Bob",
+        text: "Can you make one for Redux too?",
+        timestamp: "1 week ago",
+      },
+    ],
+  },
+  {
+    id: "2",
+    title: "Mastering JavaScript",
+    instructor: "Kyle Simpson",
+    avatar: "/avatars/kyle.png",
+    description:
+      "A deep dive into modern JavaScript features and techniques. Master closures, prototypes, async/await, and advanced ES6+ features.",
+    tags: ["JavaScript", "Advanced"],
+    videoUrl: "https://www.youtube.com/embed/js456",
+    duration: "5h 15m",
+    rating: 4.7,
+    progress: 0.8,
+    likes: 231,
+    comments: [
+      {
+        id: 1,
+        name: "Charlie",
+        text: "I finally understand closures!",
+        timestamp: "3 days ago",
+      },
+    ],
+  },
+  {
+    id: "3",
+    title: "Intro to Python Programming",
+    instructor: "Angela Yu",
+    avatar: "/avatars/angela.png",
+    description:
+      "Start your programming journey with Python basics. Learn variables, functions, loops, and object-oriented programming concepts.",
+    tags: ["Python", "Backend"],
+    videoUrl: "https://www.youtube.com/embed/py789",
+    duration: "4h 40m",
+    rating: 4.6,
+    progress: 0.1,
+    likes: 190,
+    comments: [
+      {
+        id: 1,
+        name: "Dana",
+        text: "Very beginner friendly!",
+        timestamp: "5 days ago",
+      },
+    ],
+  },
+  {
+    id: "4",
+    title: "Spring Boot Crash Course",
+    instructor: "Dan Vega",
+    avatar: "/avatars/dan.png",
+    description:
+      "Learn how to build REST APIs using Spring Boot. Cover dependency injection, JPA, security, and deployment strategies.",
+    tags: ["Java", "Spring Boot"],
+    videoUrl: "https://www.youtube.com/embed/sb321",
+    duration: "3h 50m",
+    rating: 4.3,
+    progress: 0.6,
+    likes: 158,
+    comments: [
+      {
+        id: 1,
+        name: "Eve",
+        text: "Exactly what I needed for my project!",
+        timestamp: "1 day ago",
+      },
+    ],
+  },
+  {
+    id: "5",
+    title: "Tailwind CSS from Scratch",
+    instructor: "Brad Traversy",
+    avatar: "/avatars/brad.png",
+    description:
+      "A modern utility-first CSS framework for fast UI development. Learn responsive design, components, and customization.",
+    tags: ["CSS", "Frontend"],
+    videoUrl: "https://www.youtube.com/embed/tw001",
+    duration: "2h 30m",
+    rating: 4.8,
+    progress: 0.9,
+    likes: 289,
+    comments: [
+      {
+        id: 1,
+        name: "Frank",
+        text: "Now I prefer Tailwind over Bootstrap!",
+        timestamp: "4 hours ago",
+      },
+    ],
+  },
+];
+
+// Simulate React Router params
+const useParams = () => {
+  const [currentCourseId, setCurrentCourseId] = useState("1");
+  return { id: currentCourseId, setCurrentCourseId };
+};
+
+const CourseViewPage = () => {
+  const { id: courseId, setCurrentCourseId } = useParams();
+  const [course, setCourse] = useState(null);
+  const [relatedCourses, setRelatedCourses] = useState([]);
+  const [userReaction, setUserReaction] = useState(null); // 'like' or 'dislike'
+  const [newComment, setNewComment] = useState("");
+  const [comments, setComments] = useState([]);
+  const [likes, setLikes] = useState(0);
+
+  useEffect(() => {
+    // Find current course
+    const currentCourse = CourseViewData.find((c) => c.id === courseId);
+    if (currentCourse) {
+      setCourse(currentCourse);
+      setComments(currentCourse.comments || []);
+      setLikes(currentCourse.likes || 0);
+
+      // Get related courses (exclude current course)
+      const related = CourseViewData.filter((c) => c.id !== courseId).slice(
+        0,
+        6
+      );
+      setRelatedCourses(related);
+    }
+  }, [courseId]);
 
   const handleLike = () => {
-    setLiked(!liked);
-    setLikeCount(liked ? likeCount - 1 : likeCount + 1);
+    if (userReaction === "like") {
+      setUserReaction(null);
+      setLikes(likes - 1);
+    } else {
+      setUserReaction("like");
+      setLikes(userReaction === "dislike" ? likes + 1 : likes + 1);
+    }
+  };
+
+  const handleDislike = () => {
+    if (userReaction === "dislike") {
+      setUserReaction(null);
+      setLikes(userReaction === "like" ? likes - 1 : likes);
+    } else {
+      setUserReaction("dislike");
+      if (userReaction === "like") {
+        setLikes(likes - 1);
+      }
+    }
   };
 
   const handleAddComment = () => {
     if (newComment.trim()) {
       const comment = {
         id: comments.length + 1,
-        user: "You",
-        avatar:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
-        time: "Just now",
+        name: "You",
         text: newComment,
+        timestamp: "just now",
       };
-      setComments([comment, ...comments]);
+      setComments([...comments, comment]);
       setNewComment("");
     }
   };
 
+  const handleCourseSelect = (courseId) => {
+    setCurrentCourseId(courseId);
+    setUserReaction(null); // Reset reaction for new course
+  };
+
+  if (!course) {
+    return (
+      <>
+        <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+          rel="stylesheet"
+        />
+        <style jsx>{`
+          .spinner-border {
+            width: 3rem;
+            height: 3rem;
+          }
+        `}</style>
+        <div className="min-vh-100 bg-light d-flex align-items-center justify-content-center">
+          <div className="text-center">
+            <div className="spinner-border text-primary mb-3" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            <p className="text-muted">Loading course...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
+      {/* Bootstrap CSS */}
       <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
         rel="stylesheet"
       />
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" />
 
-      <div className="min-vh-100">
-        {/* Mobile Sidebar Overlay */}
-        {sidebarOpen && (
-          <div
-            className="sidebar-overlay d-lg-none"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
+      {/* Custom CSS for YouTube-like styling */}
+      <style jsx>{`
+        .video-player {
+          background: linear-gradient(135deg, #1f2937, #111827);
+          aspect-ratio: 16/9;
+        }
 
-        {/* Sidebar */}
+        .course-thumbnail {
+          background: linear-gradient(135deg, #1f2937, #111827);
+          aspect-ratio: 16/9;
+          width: 160px;
+          height: 90px;
+        }
 
-        {/* Main Content */}
-        <div className="main-content">
-          <div className="container-fluid py-4" style={{ maxWidth: "1200px" }}>
-            {/* Search Bar */}
-            <div></div>
-            {/* Video Player */}
-            <div className="card shadow-sm mb-4">
-              <div className="card-body p-0">
-                <div className="video-container">
-                  <div className="video-placeholder">
-                    <div className="text-center">
-                      <button className="play-button text-white mb-3">
-                        <Play size={32} style={{ marginLeft: "4px" }} />
-                      </button>
-                      <h5 className="text-white mb-2">
-                        {lessons[currentLesson].title}
-                      </h5>
-                      <p className="text-light mb-0">
-                        {lessons[currentLesson].duration}
-                      </p>
+        .duration-overlay {
+          position: absolute;
+          bottom: 4px;
+          right: 4px;
+          background: rgba(0, 0, 0, 0.8);
+          color: white;
+          font-size: 0.75rem;
+          padding: 2px 4px;
+          border-radius: 2px;
+        }
+
+        .avatar-gradient {
+          background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+
+        .progress-red {
+          background-color: #dc3545;
+        }
+
+        .sidebar-item:hover {
+          background-color: #f8f9fa;
+        }
+
+        .sidebar-item:hover .course-title {
+          color: #0d6efd;
+        }
+
+        .like-btn.active {
+          background-color: #e3f2fd;
+          color: #1976d2;
+        }
+
+        .dislike-btn.active {
+          background-color: #ffebee;
+          color: #d32f2f;
+        }
+
+        .comment-avatar {
+          background: linear-gradient(135deg, #16a085, #3498db);
+        }
+
+        .user-avatar {
+          background: linear-gradient(135deg, #27ae60, #3498db);
+        }
+
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      `}</style>
+
+      <div className="min-vh-100 bg-light">
+        <div className="container-fluid py-4">
+          <div className="row g-3">
+            {/* Main Course Section - Left Side */}
+            <div className="col-lg-8">
+              {/* Video Player */}
+              <div className="video-player rounded d-flex align-items-center justify-content-center mb-4">
+                <div className="text-center text-white">
+                  <Play size={64} className="mb-3 opacity-75" />
+                  <h5 className="mb-2">{course.title}</h5>
+                  <p className="small opacity-75 mb-0">
+                    Video Player Placeholder
+                  </p>
+                </div>
+              </div>
+
+              {/* Course Info Card */}
+              <div className="card mb-4">
+                <div className="card-body">
+                  {/* Title and Tags */}
+                  <div className="mb-3">
+                    <h2 className="card-title mb-3">{course.title}</h2>
+                    <div className="d-flex flex-wrap gap-2">
+                      {course.tags.map((tag, index) => (
+                        <span key={index} className="badge bg-primary fs-6">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div className="mb-3">
+                    <div className="d-flex justify-content-between small text-muted mb-2">
+                      <span>Progress</span>
+                      <span>{Math.round(course.progress * 100)}% complete</span>
+                    </div>
+                    <div className="progress" style={{ height: "8px" }}>
+                      <div
+                        className="progress-bar bg-success"
+                        role="progressbar"
+                        style={{ width: `${course.progress * 100}%` }}
+                        aria-valuenow={course.progress * 100}
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Instructor Info */}
+                  <div className="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+                    <div className="d-flex align-items-center">
+                      <div
+                        className="avatar-gradient rounded-circle d-flex align-items-center justify-content-center me-3"
+                        style={{ width: "48px", height: "48px" }}
+                      >
+                        <User size={24} className="text-white" />
+                      </div>
+                      <div>
+                        <h6 className="mb-0">{course.instructor}</h6>
+                        <small className="text-muted">Course Instructor</small>
+                      </div>
+                    </div>
+
+                    <button className="btn btn-primary">
+                      {course.progress === 1
+                        ? "Review Course"
+                        : "Continue Learning"}
+                    </button>
+                  </div>
+
+                  {/* Like/Dislike Buttons */}
+                  <div className="d-flex gap-2 mb-3 pb-3 border-bottom">
+                    <button
+                      onClick={handleLike}
+                      className={`btn btn-outline-secondary d-flex align-items-center gap-2 like-btn ${
+                        userReaction === "like" ? "active" : ""
+                      }`}
+                    >
+                      <ThumbsUp size={16} />
+                      <span>{likes}</span>
+                    </button>
+                    <button
+                      onClick={handleDislike}
+                      className={`btn btn-outline-secondary d-flex align-items-center gap-2 dislike-btn ${
+                        userReaction === "dislike" ? "active" : ""
+                      }`}
+                    >
+                      <ThumbsDown size={16} />
+                    </button>
+                  </div>
+
+                  {/* Description */}
+                  <div>
+                    <h6 className="mb-2">About this course</h6>
+                    <p className="text-muted mb-0">{course.description}</p>
                   </div>
                 </div>
               </div>
-            </div>
-            {/* <div className="card shadow-sm mb-4">
-              
-            </div> */}
-            {/* Engagement Section */}
-            <div className="card shadow-sm">
-              <div className="card-body p-4">
-                <div className="d-flex align-items-start">
-                  <img
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face"
-                    alt="Instructor"
-                    className="avatar-lg me-4"
-                  />{" "}
-                  <div className="flex-grow-1">
-                    <h2 className="fw-bold text-dark mb-3">
-                      React Hooks Masterclass
-                    </h2>
-                    <p className="text-muted mb-4">
-                      Master React Hooks from basics to advanced patterns. Learn
-                      useState, useEffect, custom hooks, and performance
-                      optimization techniques used in production applications.
-                    </p>
-                    <div className="d-flex align-items-center flex-wrap gap-4">
-                      <div className="d-flex align-items-center">
-                        <User size={16} className="me-1 text-muted" />
-                        <small className="text-muted">Dr. Alex Rodriguez</small>
-                      </div>
-                      <div className="d-flex align-items-center">
-                        <Star
-                          size={16}
-                          className="me-1 text-warning"
-                          fill="currentColor"
-                        />{" "}
-                        <small className="text-muted">
-                          4.8 (1,234 reviews)
-                        </small>
-                      </div>
-                      <span className="badge-custom">Web Development</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="card-body p-4">
-                {/* Like Button */}
-                <div className="d-flex align-items-center pb-4 border-bottom mb-4">
-                  <button
-                    onClick={handleLike}
-                    className={`like-btn btn d-flex align-items-center me-4 ${
-                      liked ? "liked" : ""
-                    }`}
-                  >
-                    <ThumbsUp
-                      size={16}
-                      className="me-2"
-                      fill={liked ? "currentColor" : "none"}
-                    />
-                    <span className="fw-medium">{likeCount}</span>
-                  </button>
-                  <div className="d-flex align-items-center text-muted">
-                    <MessageSquare size={16} className="me-2" />
-                    <span>{comments.length} Comments</span>
-                  </div>
-                </div>
 
-                {/* Add Comment */}
-                <div className="pb-4 border-bottom mb-4">
-                  <div className="d-flex">
-                    <img
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face"
-                      alt="Your avatar"
-                      className="avatar me-3"
-                    />
+              {/* Comments Section */}
+              <div className="card">
+                <div className="card-body">
+                  <div className="d-flex align-items-center gap-2 mb-4">
+                    <MessageCircle size={20} className="text-muted" />
+                    <h5 className="mb-0">Comments ({comments.length})</h5>
+                  </div>
+
+                  {/* Add Comment */}
+                  <div className="d-flex gap-3 mb-4">
+                    <div
+                      className="user-avatar rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                      style={{ width: "32px", height: "32px" }}
+                    >
+                      <User size={16} className="text-white" />
+                    </div>
                     <div className="flex-grow-1">
                       <textarea
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         placeholder="Add a comment..."
-                        className="form-control mb-2"
+                        className="form-control mb-3"
                         rows="3"
-                        style={{ resize: "none" }}
                       />
-                      <div className="d-flex justify-content-end">
-                        <button
-                          onClick={handleAddComment}
-                          className="btn btn-primary d-flex align-items-center"
-                        >
-                          <Send size={16} className="me-2" />
-                          Comment
-                        </button>
-                      </div>
+                      <button
+                        onClick={handleAddComment}
+                        disabled={!newComment.trim()}
+                        className="btn btn-primary d-flex align-items-center gap-2"
+                      >
+                        <Send size={16} />
+                        <span>Post</span>
+                      </button>
                     </div>
                   </div>
-                </div>
 
-                {/* Comments List */}
-                <div className="d-flex flex-column gap-4">
-                  {comments.map((comment) => (
-                    <div key={comment.id} className="d-flex">
-                      <img
-                        src={comment.avatar}
-                        alt={comment.user}
-                        className="avatar me-3"
-                      />
-                      <div className="flex-grow-1">
-                        <div className="comment-bubble">
-                          <div className="d-flex align-items-center mb-2">
-                            <span className="fw-medium text-dark me-2">
-                              {comment.user}
-                            </span>
-                            <small className="text-muted">{comment.time}</small>
+                  {/* Comments List */}
+                  <div className="d-flex flex-column gap-3">
+                    {comments.map((comment) => (
+                      <div key={comment.id} className="d-flex gap-3">
+                        <div
+                          className="comment-avatar rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                          style={{ width: "32px", height: "32px" }}
+                        >
+                          <User size={16} className="text-white" />
+                        </div>
+                        <div className="flex-grow-1">
+                          <div className="d-flex align-items-center gap-2 mb-1">
+                            <h6 className="mb-0">{comment.name}</h6>
+                            <small className="text-muted">
+                              {comment.timestamp}
+                            </small>
                           </div>
-                          <p className="text-dark mb-0">{comment.text}</p>
+                          <p className="mb-0 text-muted">{comment.text}</p>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Sidebar */}
-      <div className={`sidebar ${sidebarOpen ? "show" : ""} mt-`}>
-        <div className="p-4 border-bottom ">
-          <div className="d-flex align-items-center justify-content-between">
-            <h5 className="mb-0 fw-semibold text-dark">Course Lessons</h5>
-            <button
-              type="button"
-              onClick={() => setSidebarOpen(false)}
-              className="btn-close d-lg-none"
-              aria-label="Close"
-            />
-          </div>
-        </div>
-        <div className="pb-5">
-          {lessons.map((lesson, index) => (
-            <div
-              key={index}
-              onClick={() => {
-                setCurrentLesson(index);
-                setSidebarOpen(false);
-              }}
-              className={`lesson-item p-3 ${
-                currentLesson === index ? "active" : ""
-              }`}
-            >
-              <div className="d-flex align-items-center">
-                <div
-                  className={
-                    lesson.completed
-                      ? "lesson-completed me-3"
-                      : "lesson-pending me-3"
-                  }
-                >
-                  {lesson.completed ? (
-                    <svg
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  ) : (
-                    <Play size={16} />
-                  )}
-                </div>
-                <div className="flex-grow-1">
-                  <h6
-                    className={`mb-1 ${
-                      currentLesson === index ? "text-primary" : "text-dark"
-                    }`}
-                  >
-                    {lesson.title}
-                  </h6>
-                  <div className="d-flex align-items-center text-muted">
-                    <Clock size={12} className="me-1" />
-                    <small>{lesson.duration}</small>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
-          ))}
+
+            {/* Related Courses Sidebar - Right Side (YouTube Style) */}
+            <div className="col-lg-4">
+              <div className="d-flex flex-column gap-2">
+                {relatedCourses.map((relatedCourse) => (
+                  <div
+                    key={relatedCourse.id}
+                    onClick={() => handleCourseSelect(relatedCourse.id)}
+                    className="d-flex gap-2 p-2 rounded cursor-pointer sidebar-item"
+                    style={{ cursor: "pointer" }}
+                  >
+                    {/* Thumbnail */}
+                    <div className="position-relative flex-shrink-0">
+                      <div className="course-thumbnail rounded d-flex align-items-center justify-content-center">
+                        <Play size={32} className="text-white opacity-75" />
+                      </div>
+                      {/* Duration overlay */}
+                      <div className="duration-overlay">
+                        {relatedCourse.duration}
+                      </div>
+                    </div>
+
+                    {/* Course Info */}
+                    <div className="flex-grow-1 py-1" style={{ minWidth: 0 }}>
+                      <h6 className="mb-1 small line-clamp-2 course-title">
+                        {relatedCourse.title}
+                      </h6>
+                      <p
+                        className="mb-1 text-muted"
+                        style={{ fontSize: "0.75rem" }}
+                      >
+                        {relatedCourse.instructor}
+                      </p>
+                      <div
+                        className="d-flex align-items-center gap-3 text-muted"
+                        style={{ fontSize: "0.75rem" }}
+                      >
+                        <div className="d-flex align-items-center gap-1">
+                          <Star size={12} className="text-warning" />
+                          <span>{relatedCourse.rating}</span>
+                        </div>
+                        <span>{relatedCourse.likes} likes</span>
+                      </div>
+                      {/* Progress indicator for started courses */}
+                      {relatedCourse.progress > 0 && (
+                        <div className="mt-2">
+                          <div className="progress" style={{ height: "2px" }}>
+                            <div
+                              className="progress-bar progress-red"
+                              style={{
+                                width: `${relatedCourse.progress * 100}%`,
+                              }}
+                            ></div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+
+                {/* Load more button */}
+                <div className="pt-3">
+                  <button className="btn btn-link w-100 text-primary">
+                    Show more courses
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
@@ -327,198 +538,3 @@ const CourseViewPage = () => {
 };
 
 export default CourseViewPage;
-// <style>
-//   {`
-//     :root {
-//       --primary-color: #6366f1;
-//       --primary-light: #e0e7ff;
-//       --success-color: #10b981;
-//       --gray-50: #f9fafb;
-//       --gray-100: #f3f4f6;
-//       --gray-200: #e5e7eb;
-//       --gray-300: #d1d5db;
-//       --gray-400: #9ca3af;
-//       --gray-500: #6b7280;
-//       --gray-600: #4b5563;
-//       --gray-700: #374151;
-//       --gray-800: #1f2937;
-//       --gray-900: #111827;
-//     }
-
-//     body {
-//       background-color: var(--gray-50);
-//       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-//     }
-
-//     .sidebar {
-//       position: fixed;
-//       top: 0;
-//       left: 0;
-//       height: 100vh;
-//       width: 320px;
-//       background: white;
-//       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-//       transform: translateX(-100%);
-//       transition: transform 0.3s ease;
-//       z-index: 1050;
-//       overflow-y: auto;
-//     }
-
-//     .sidebar.show {
-//       transform: translateX(0);
-//     }
-
-//     .sidebar-overlay {
-//       position: fixed;
-//       top: 0;
-//       left: 0;
-//       width: 100vw;
-//       height: 100vh;
-//       background: rgba(0, 0, 0, 0.5);
-//       z-index: 1040;
-//     }
-
-//     .main-content {
-//       margin-left: 0;
-//       transition: margin-left 0.3s ease;
-//     }
-
-//     .lesson-item {
-//       cursor: pointer;
-//       border-bottom: 1px solid var(--gray-100);
-//       transition: background-color 0.2s;
-//     }
-
-//     .lesson-item:hover {
-//       background-color: var(--gray-50);
-//     }
-
-//     .lesson-item.active {
-//       background-color: var(--primary-light);
-//       border-left: 4px solid var(--primary-color);
-//     }
-
-//     .lesson-completed {
-//       width: 32px;
-//       height: 32px;
-//       border-radius: 50%;
-//       display: flex;
-//       align-items: center;
-//       justify-content: center;
-//       background-color: var(--success-color);
-//       color: white;
-//     }
-
-//     .lesson-pending {
-//       width: 32px;
-//       height: 32px;
-//       border-radius: 50%;
-//       display: flex;
-//       align-items: center;
-//       justify-content: center;
-//       background-color: var(--gray-200);
-//       color: var(--gray-600);
-//     }
-
-//     .video-container {
-//       position: relative;
-//       width: 100%;
-//       height: 0;
-//       padding-bottom: 56.25%; /* 16:9 aspect ratio */
-//       background: #000;
-//       border-radius: 0.5rem;
-//       overflow: hidden;
-//     }
-
-//     .video-placeholder {
-//       position: absolute;
-//       top: 0;
-//       left: 0;
-//       width: 100%;
-//       height: 100%;
-//       display: flex;
-//       align-items: center;
-//       justify-content: center;
-//       color: white;
-//       text-align: center;
-//     }
-
-//     .play-button {
-//       width: 80px;
-//       height: 80px;
-//       border-radius: 50%;
-//       background-color: var(--primary-color);
-//       display: flex;
-//       align-items: center;
-//       justify-content: center;
-//       cursor: pointer;
-//       transition: background-color 0.2s;
-//       border: none;
-//     }
-
-//     .play-button:hover {
-//       background-color: #5856eb;
-//     }
-
-//     .like-btn {
-//       border: 1px solid var(--gray-300);
-//       background: var(--gray-50);
-//       color: var(--gray-600);
-//       border-radius: 0.5rem;
-//       padding: 0.5rem 1rem;
-//       transition: all 0.2s;
-//     }
-
-//     .like-btn.liked {
-//       background: var(--primary-light);
-//       border-color: var(--primary-color);
-//       color: var(--primary-color);
-//     }
-
-//     .comment-bubble {
-//       background-color: var(--gray-50);
-//       border-radius: 0.5rem;
-//       padding: 0.75rem;
-//     }
-
-//     .badge-custom {
-//       background-color: var(--primary-light);
-//       color: var(--primary-color);
-//       font-size: 0.75rem;
-//       font-weight: 500;
-//       padding: 0.25rem 0.75rem;
-//       border-radius: 9999px;
-//     }
-
-//     @media (min-width: 992px) {
-//       .sidebar {
-//         transform: translateX(0);
-//       }
-
-//       .main-content {
-//         margin-left: 320px;
-//       }
-//     }
-
-//     .avatar {
-//       width: 40px;
-//       height: 40px;
-//       border-radius: 50%;
-//       object-fit: cover;
-//     }
-
-//     .avatar-sm {
-//       width: 32px;
-//       height: 32px;
-//       border-radius: 50%;
-//       object-fit: cover;
-//     }
-
-//     .avatar-lg {
-//       width: 64px;
-//       height: 64px;
-//       border-radius: 50%;
-//       object-fit: cover;
-//     }
-//   `}
-// </style>;

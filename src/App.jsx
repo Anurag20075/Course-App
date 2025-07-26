@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router";
 import Header from "./components/Header.jsx";
 import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
-import CourseView from "./components/CourseView.jsx";
+import CourseViewPage from "./components/CourseView.jsx";
 // import CourseViewPage from "./components/CourseViewBootstrapCombined.jsx";
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
             />
             <Route
               path="/course-view"
-              element={<CourseView></CourseView>}
+              element={<CourseViewPage></CourseViewPage>}
             ></Route>
             <Route path="/about" element={<About></About>} exact />
             <Route path="/contact" element={<Contact></Contact>} exact />

@@ -1,194 +1,67 @@
+   .video-player {
+       background: linear-gradient(135deg, #1f2937, #111827);
+       aspect-ratio: 16/9;
+     }
 
-    :root {
-      --primary-color: #6366f1;
-      --primary-light: #e0e7ff;
-      --success-color: #10b981;
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-400: #9ca3af;
-      --gray-500: #6b7280;
-      --gray-600: #4b5563;
-      --gray-700: #374151;
-      --gray-800: #1f2937;
-      --gray-900: #111827;
-    }
+     .course-thumbnail {
+       background: linear-gradient(135deg, #1f2937, #111827);
+       aspect-ratio: 16/9;
+       width: 160px;
+       height: 90px;
+     }
 
-    body {
-      background-color: var(--gray-50);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
+     .duration-overlay {
+       position: absolute;
+       bottom: 4px;
+       right: 4px;
+       background: rgba(0, 0, 0, 0.8);
+       color: white;
+       font-size: 0.75rem;
+       padding: 2px 4px;
+       border-radius: 2px;
+     }
 
-    .sidebar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: auto;
-      height: 100vh;
-      width: 320px;
-      background: white;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-      z-index: 1050;
-      overflow-y: auto;
-      margin-top: 56px;
-    }
+     .avatar-gradient {
+       background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+     }
 
-    .sidebar.show {
-      transform: translateX(0);
-    }
+     .progress-red {
+       background-color: #dc3545;
+     }
 
-    .sidebar-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1040;
-    }
+     .sidebar-item:hover {
+       background-color: #f8f9fa;
+     }
 
-    .main-content {
-      margin-right: 0;
-      transition: margin-right 0.3s ease;
-    }
+     .sidebar-item:hover .course-title {
+       color: #0d6efd;
+     }
 
-    @media (min-width: 992px) {
-      .sidebar {
-        transform: translateX(0);
-      }
+     .like-btn.active {
+       background-color: #e3f2fd;
+       color: #1976d2;
+     }
 
-      .main-content {
-        margin-left: 0;
-        margin-right: 320px;
-      }
-    }
+     .dislike-btn.active {
+       background-color: #ffebee;
+       color: #d32f2f;
+     }
 
-    .lesson-item {
-      cursor: pointer;
-      border-bottom: 1px solid var(--gray-100);
-      transition: background-color 0.2s;
-    }
+     .comment-avatar {
+       background: linear-gradient(135deg, #16a085, #3498db);
+     }
 
-    .lesson-item:hover {
-      background-color: var(--gray-50);
-    }
+     .user-avatar {
+       background: linear-gradient(135deg, #27ae60, #3498db);
+     }
 
-    .lesson-item.active {
-      background-color: var(--primary-light);
-      border-right: 4px solid var(--primary-color);
-    }
-
-    .lesson-completed,
-    .lesson-pending {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .lesson-completed {
-      background-color: var(--success-color);
-      color: white;
-    }
-
-    .lesson-pending {
-      background-color: var(--gray-200);
-      color: var(--gray-600);
-    }
-
-    .video-container {
-      position: relative;
-      width: 100%;
-      height: 0;
-      padding-bottom: 56.25%;
-      background: #000;
-      border-radius: 0.5rem;
-      overflow: hidden;
-    }
-
-    .video-placeholder {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-    }
-
-    .play-button {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background-color: var(--primary-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      border: none;
-    }
-
-    .play-button:hover {
-      background-color: #5856eb;
-    }
-
-    .like-btn {
-      border: 1px solid var(--gray-300);
-      background: var(--gray-50);
-      color: var(--gray-600);
-      border-radius: 0.5rem;
-      padding: 0.5rem 1rem;
-      transition: all 0.2s;
-    }
-
-    .like-btn.liked {
-      background: var(--primary-light);
-      border-color: var(--primary-color);
-      color: var(--primary-color);
-    }
-
-    .comment-bubble {
-      background-color: var(--gray-50);
-      border-radius: 0.5rem;
-      padding: 0.75rem;
-    }
-
-    .badge-custom {
-      background-color: var(--primary-light);
-      color: var(--primary-color);
-      font-size: 0.75rem;
-      font-weight: 500;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
-    }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .avatar-sm {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .avatar-lg {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
+     .line-clamp-2 {
+       display: -webkit-box;
+       -webkit-line-clamp: 2;
+       -webkit-box-orient: vertical;
+       overflow: hidden;
+     }
+     .spinner-border {
+       width: 3rem;
+       height: 3rem;
+     }
