@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import { CheckCircle } from "lucide-react";
+import { ArrowRight, Star, Play, CheckCircle } from "lucide-react";
+// import { CheckCircle } from "lucide-react";
+// import { Play } from "lucide-react";
 export default function CourseDetailedPage() {
   const navigate = useNavigate();
   const handleclick = () => {
@@ -27,7 +28,11 @@ export default function CourseDetailedPage() {
                       key={i}
                       className="material-symbols-outlined text-warning"
                     >
-                      star
+                      <Star
+                        size={20}
+                        className="text-warning"
+                        fill="currentColor"
+                      />
                     </span>
                   ))}
                   <span className="material-symbols-outlined text-warning">
@@ -84,7 +89,11 @@ export default function CourseDetailedPage() {
                   <div className="d-flex gap-3 small text-muted">
                     <div className="d-flex align-items-center">
                       <span className="material-symbols-outlined me-1 text-primary">
-                        star
+                        <Star
+                          size={20}
+                          className="text-warning"
+                          fill="currentColor"
+                        />
                       </span>
                       4.9 Instructor Rating
                     </div>
@@ -197,7 +206,7 @@ export default function CourseDetailedPage() {
                     style={{ width: "3.5rem", height: "3.5rem" }}
                   >
                     <span className="material-symbols-outlined text-primary fs-3">
-                      play_arrow
+                      <Play size={28} className="text-primary" />
                     </span>
                   </button>
                   <div className="position-absolute bottom-0 end-0 bg-dark bg-opacity-75 text-white small px-2 py-1">
@@ -250,17 +259,6 @@ export default function CourseDetailedPage() {
                       </li>
                     ))}
                   </ul> */}
-
-                  <div className="d-flex justify-content-center gap-3 pt-3">
-                    <button className="btn btn-sm btn-link text-muted">
-                      <span className="material-symbols-outlined">share</span>
-                    </button>
-                    <button className="btn btn-sm btn-link text-muted">
-                      <span className="material-symbols-outlined">
-                        favorite_border
-                      </span>
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
@@ -270,3 +268,4 @@ export default function CourseDetailedPage() {
     </div>
   );
 }
+// import {  } from "lucide-react";
