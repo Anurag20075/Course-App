@@ -10,6 +10,7 @@ import Header from "./components/Header.jsx";
 import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
 import CourseViewPage from "./components/CourseView.jsx";
+import CourseDetailedPage from "./components/CourseDetailedPage.jsx";
 // import CourseViewPage from "./components/CourseViewBootstrapCombined.jsx";
 
 function App() {
@@ -31,6 +32,11 @@ function App() {
               path="/course-view"
               element={<CourseViewPage></CourseViewPage>}
             ></Route>
+            <Route
+              path="/course-detailed"
+              element={<CourseDetailedPage></CourseDetailedPage>}
+              exact
+            />
             <Route path="/about" element={<About></About>} exact />
             <Route path="/contact" element={<Contact></Contact>} exact />
           </Routes>
