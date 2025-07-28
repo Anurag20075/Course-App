@@ -200,12 +200,6 @@ const CourseViewPage = () => {
                     <span>Progress</span>
                     <span>{Math.round(course.progress * 100)}%</span>
                   </div>
-                  <div className="progress" style={{ height: "8px" }}>
-                    <div
-                      className="progress-bar bg-success"
-                      style={{ width: `${course.progress * 100}%` }}
-                    ></div>
-                  </div>
                 </div>
 
                 <div className="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
@@ -363,3 +357,9 @@ const CourseViewPage = () => {
 };
 
 export default CourseViewPage;
+//  <div className="progress" style={{ height: "8px" }}>
+//    <div
+//      className="progress-bar bg-success"
+//      style={{ width: `${course.progress * 100}%` }}
+//    ></div>
+//  </div>;
