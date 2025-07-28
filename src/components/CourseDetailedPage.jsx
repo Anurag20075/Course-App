@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Star, Play, CheckCircle } from "lucide-react";
-// import { CheckCircle } from "lucide-react";
-// import { Play } from "lucide-react";
+import { FaStarHalfAlt } from "react-icons/fa";
+
 export default function CourseDetailedPage() {
   const navigate = useNavigate();
   const handleclick = () => {
@@ -36,7 +36,7 @@ export default function CourseDetailedPage() {
                     </span>
                   ))}
                   <span className="material-symbols-outlined text-warning">
-                    star_half
+                    <FaStarHalfAlt size={20} color="#f5c518" />
                   </span>
                   <span className="ms-1 fw-medium">4.8</span>
                 </div>
@@ -179,7 +179,11 @@ export default function CourseDetailedPage() {
               <div className="d-flex justify-content-between align-items-center mb-4">
                 <div className="d-flex align-items-center">
                   <span className="material-symbols-outlined text-warning me-1">
-                    star
+                    <Star
+                      size={20}
+                      className="text-warning"
+                      fill="currentColor"
+                    />
                   </span>
                   <span className="fw-semibold">4.8 course rating</span>
                   <span className="mx-2 text-muted">•</span>
@@ -239,26 +243,6 @@ export default function CourseDetailedPage() {
                   <p className="text-center text-muted small mb-3">
                     30-Day Money-Back Guarantee
                   </p>
-
-                  {/* <h6>This course includes:</h6>
-                  <ul className="list-unstyled">
-                    {[
-                      "68 hours on-demand video",
-                      "85 articles & resources",
-                      "129 downloadable resources",
-                      "45 coding exercises",
-                      "Access on mobile and TV",
-                      "Certificate of completion",
-                      "Lifetime access",
-                    ].map((text, i) => (
-                      <li key={i} className="d-flex align-items-center mb-1">
-                        <span className="material-symbols-outlined me-2 text-secondary">
-                          landscape
-                        </span>
-                        {text}
-                      </li>
-                    ))}
-                  </ul> */}
                 </div>
               </div>
             </div>

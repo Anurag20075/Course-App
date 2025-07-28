@@ -1,7 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-
+import { useNavigate } from "react-router-dom";
 const Course = ({ course, deleteCourse }) => {
+  const navigate = useNavigate();
+  const handleCourseview = () => navigate(`/course-detailed`);
   return (
     <Card className="card shadow-sm" style={{ width: "17rem", padding: "0px" }}>
       <div className="d-flex m-auto h-50 p-2 align-items-center">
@@ -28,6 +30,13 @@ const Course = ({ course, deleteCourse }) => {
           </Button>
           <Button variant="outline-dark" className="ms-2">
             Update
+          </Button>
+          <Button
+            variant="outline-dark"
+            className="ms-2"
+            onClick={handleCourseview}
+          >
+            View
           </Button>
         </div>
       </div>
