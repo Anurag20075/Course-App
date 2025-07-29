@@ -72,8 +72,10 @@ const AddCourse = () => {
       id: "",
       title: "",
       author: "",
+      tags: "",
       description: "",
       imageLink: "",
+      videoLink: "",
     });
   };
 
@@ -124,6 +126,21 @@ const AddCourse = () => {
               onChange={handleInputChange}
             />
           </FormGroup>
+          {/* Tags */}
+
+          <FormGroup className="mb-3">
+            <Label for="tags" className="form-label fw-bold">
+              Tags
+            </Label>
+            <Input
+              type="text"
+              id="tags"
+              className="form-control"
+              placeholder="Enter course Tags eg. AI, Cloud, Web Development"
+              value={course.tags}
+              onChange={handleInputChange}
+            />
+          </FormGroup>
           <FormGroup className="mb-3">
             <Label for="description" className="form-label fw-bold">
               Description
@@ -148,6 +165,19 @@ const AddCourse = () => {
               className="form-control"
               placeholder="Enter image URL"
               value={course.imageLink}
+              onChange={handleInputChange}
+            />
+          </FormGroup>
+          <FormGroup className="mb-4">
+            <Label for="imageLink" className="form-label fw-bold">
+              Video URL
+            </Label>
+            <Input
+              type="text"
+              id="videoLink"
+              className="form-control"
+              placeholder="Enter Video URL"
+              value={course.videoLink}
               onChange={handleInputChange}
             />
           </FormGroup>

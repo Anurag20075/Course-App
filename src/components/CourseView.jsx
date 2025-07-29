@@ -15,7 +15,7 @@ const CourseViewData = [
   {
     id: "1",
     title: "React for Beginners",
-    instructor: "Wes Bos",
+    instructor: "Web Boss",
     avatar: "/avatars/wes.png",
     description:
       "Learn the fundamentals of React, the popular JavaScript library for building user interfaces. This comprehensive course covers components, state management, hooks, and modern React patterns.",
@@ -365,15 +365,15 @@ const CourseViewPage = () => {
                       </div>
                       <div>
                         <h6 className="mb-0">{course.instructor}</h6>
-                        <small className="text-muted">Course Instructor</small>
+                        {/* <small className="text-muted">Course Instructor</small> */}
                       </div>
                     </div>
 
-                    <button className="btn btn-primary">
+                    {/* <button className="btn btn-primary">
                       {course.progress === 1
                         ? "Review Course"
                         : "Continue Learning"}
-                    </button>
+                    </button> */}
                   </div>
 
                   {/* Like/Dislike Buttons */}

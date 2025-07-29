@@ -38,19 +38,15 @@ export default function CourseDetailedPage() {
                   <span className="material-symbols-outlined text-warning">
                     <FaStarHalfAlt size={20} color="#f5c518" />
                   </span>
-                  <span className="ms-1 fw-medium">4.8</span>
+                  <span className="ms-1 fw-large">4.8</span>
                 </div>
-                <span className="text-white-50">(2,845 ratings)</span>
-                <div className="d-flex align-items-center">
+                {/* <div className="d-flex align-items-center">
                   <span className="material-symbols-outlined text-white-50 small me-1">
                     person
                   </span>
                   <span>34,567 students</span>
-                </div>
+                </div> */}
               </div>
-              <p className="text-white-50 mt-2">
-                Last updated June 2023 | Created by John Smith
-              </p>
             </div>
             <div className="col-md-5 col-lg-4">
               <div className="bg-white rounded shadow overflow-hidden">
@@ -69,7 +65,7 @@ export default function CourseDetailedPage() {
       <div className="container py-5">
         <div className="row g-4">
           <div className="col-lg-8">
-            <div className="bg-white rounded shadow-sm p-4 mb-4">
+            {/* <div className="bg-white rounded shadow-sm p-4 mb-4">
               <h2 className="h5 border-bottom pb-2 mb-3">Instructor</h2>
               <div className="row g-3">
                 <div className="col-auto">
@@ -83,48 +79,16 @@ export default function CourseDetailedPage() {
                 </div>
                 <div className="col">
                   <h5 className="mb-1">John Smith</h5>
-                  <p className="text-muted small mb-2">
-                    JavaScript Developer & Educator
-                  </p>
-                  <div className="d-flex gap-3 small text-muted">
-                    <div className="d-flex align-items-center">
-                      <span className="material-symbols-outlined me-1 text-primary">
-                        <Star
-                          size={20}
-                          className="text-warning"
-                          fill="currentColor"
-                        />
-                      </span>
-                      4.9 Instructor Rating
-                    </div>
-                    <div className="d-flex align-items-center">
-                      <span className="material-symbols-outlined me-1 text-primary">
-                        reviews
-                      </span>
-                      1,245 Comments
-                    </div>
-                    <div className="d-flex align-items-center">
-                      <span className="material-symbols-outlined me-1 text-primary">
-                        groups
-                      </span>
-                      128,943 Students
-                    </div>
-                  </div>
                   <p className="mt-2">
                     Web developer and instructor with over 10 years of
                     experience. Passionate about teaching and making complex
                     concepts easy to understand. Author of bestselling courses
                     on JavaScript, React, and web development.
                   </p>
-                  <a href="#" className="text-primary fw-medium">
-                    View full profile
-                    <span className="material-symbols-outlined ms-1 small">
-                      arrow_forward
-                    </span>
-                  </a>
+                  ``
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="bg-white rounded shadow-sm p-4 mb-4">
               <h2 className="h5 border-bottom pb-2 mb-3">Course Overview</h2>
               <p>
@@ -134,28 +98,8 @@ export default function CourseDetailedPage() {
                 understand how JavaScript works behind the scenes, and prepare
                 for technical interviews.
               </p>
-              <h6 className="fw-semibold mt-4 mb-2">What you'll learn:</h6>
-              <ul className="row row-cols-1 row-cols-md-2 g-2 list-unstyled">
-                {[
-                  "JavaScript fundamentals and advanced concepts",
-                  "Modern ES6+ syntax and features",
-                  "Object-oriented programming with JavaScript",
-                  "Asynchronous JavaScript (Promises, async/await)",
-                  "How to architect your code using modern best practices",
-                  "Complex algorithms and data structures",
-                  "Build 10 real-world projects for your portfolio",
-                  "Debug and solve JavaScript coding problems",
-                ].map((item, index) => (
-                  <li key={index} className="d-flex">
-                    <span className="material-symbols-outlined text-success me-2">
-                      <CheckCircle size={20} strokeWidth={2} color="#198754" />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
             </div>
-            <div className="bg-white rounded shadow-sm p-4 mb-4">
+            {/* <div className="bg-white rounded shadow-sm p-4 mb-4">
               <h2 className="h5 border-bottom pb-2 mb-3">Requirements</h2>
               <ul className="list-unstyled">
                 {[
@@ -172,7 +116,7 @@ export default function CourseDetailedPage() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
 
             <div className="bg-white rounded shadow-sm p-4">
               <h2 className="h5 border-bottom pb-2 mb-3">Student Comments</h2>
@@ -221,28 +165,25 @@ export default function CourseDetailedPage() {
                 <div className="p-4">
                   <div className="d-flex justify-content-between align-items-baseline mb-2">
                     <div>
-                      <span className="fs-4 fw-bold">$49.99</span>
-                      <span className="text-muted text-decoration-line-through ms-2">
-                        $199.99
-                      </span>
+                      <span className="fs-4 fw-bold">$0</span>
                     </div>
-                    <span className="badge bg-warning text-dark">75% off</span>
+                    {/* <span className="badge bg-warning text-dark">75% off</span> */}
                   </div>
-                  <div className="text-danger small d-flex align-items-center mb-3">
+                  {/* <div className="text-danger small d-flex align-items-center mb-3">
                     <span className="material-symbols-outlined me-1 small">
                       schedule
                     </span>
                     3 days left at this price!
-                  </div>
+                  </div> */}
                   <button
                     className="btn btn-primary w-100 mb-2"
                     onClick={handleclick}
                   >
                     Enroll Now
                   </button>
-                  <p className="text-center text-muted small mb-3">
+                  {/* <p className="text-center text-muted small mb-3">
                     30-Day Money-Back Guarantee
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
