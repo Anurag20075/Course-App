@@ -6,7 +6,7 @@ A Full Stack Web Application for managing online courses — built using *React,
 
 | Home Page             | Add Course                 | Explore Courses             |
 | --------------------- | -------------------------- | --------------------------- |
-| ![Home](gif/home.gif) | ![Add](gif/add-course.gif) | ![Explore](gif/explore.gif) |
+| ![Home](gifs/home.gif) | ![Add](gifs/add-course.gif) | ![Explore](gifs/explore.gif) |
 
 ## 🚀 Features
 
