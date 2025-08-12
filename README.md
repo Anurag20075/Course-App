@@ -46,7 +46,7 @@ A Full Stack Web Application for managing online courses — built using *React,
 ### 1. Clone the repository
 
 bash
-git clone https://github.com/Kavya75340/Course_App.git
+git clone https://github.com/Anurag20075/Course_App.git
 cd Course_App
 
 
